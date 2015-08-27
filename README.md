@@ -13,11 +13,11 @@ What was not:
 
 README file in the sources directory is from original qputty and is obsolete.
 
-Building example:
-git clone https://github.com/dsmorozov/qputty-qt5.git
-git clone git://git.tartarus.org/simon/putty.git
-cd putty
-git checkout tags/0.65
-cd ../qputty-qt5
-qmake
-make
+Building example:  
+git clone https://github.com/dsmorozov/qputty-qt5.git  
+git clone git://git.tartarus.org/simon/putty.git  
+cd putty  
+git checkout tags/0.65  
+cd ../qputty-qt5  
+qmake  
+make  
