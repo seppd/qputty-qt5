@@ -1,0 +1,11 @@
+qputty was initiated by svs at 4js dot com,
+the project is now maintained by ls.
+building qPutty
+----------------
+
+% cd qPutty
+% cd ..
+% svn co svn://svn.tartarus.org/sgt/putty
+% cd qPutty
+% qmake 
+% make

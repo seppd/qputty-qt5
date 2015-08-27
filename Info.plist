@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>CFBundleIconFile</key>
+        <string>@ICON@</string>
+        <key>CFBundleSignature</key>
+        <string>@TYPEINFO@</string>
+        <key>CFBundleExecutable</key>
+        <string>@EXECUTABLE@</string>
+        <key>CFBundleIdentifier</key>
+        <string>com.4js.@EXECUTABLE@</string>
+        <key>CFBundleName</key>
+        <string>qPutty</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleShortVersionString</key>
+        <string>@SHORT_VERSION@</string>
+        <key>CFBundleSignature</key>
+        <string>qtty</string>
+        <key>NSHumanReadableCopyright</key>
+        <string>Copyright (C) 2011, www.4js.com </string>
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.utilities</string>
+
+</dict>
+</plist>
+
