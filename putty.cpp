@@ -28,7 +28,7 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(":icons/putty-32.png"));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("qputty")));
 
     QPutty p;
     int ret=p.run(app.arguments());

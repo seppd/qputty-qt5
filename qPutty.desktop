@@ -1,8 +1,9 @@
 [Desktop Entry]
 Name=QPutty
+GenericName=SSH and telnet client
 Comment=Log on to remote systems using SSH, Telnet or Rlogin
 Exec=qPutty
-Icon=putty-32.png
+Icon=qputty
 Terminal=false
 Type=Application
 StartupNotify=false
