@@ -7,7 +7,7 @@ isEmpty(VERSION) {
     VERSION=$$system(git describe --tags)
 }
 isEmpty(PUTTY_SRC_VERSION){
-    PUTTY_SRC_VERSION=$$system(git --git-dir=$$PUTTY_HOME/.git/ --work-tree=$$PUTTY_HOME describe --tags)
+    PUTTY_SRC_VERSION=$$system(git submodule status $$PUTTY_HOME | sed \'s/^.*(//;s/)$//\')
 }
 DEFINES *= VERSION=\\\"$$VERSION\\\" PUTTY_VERSION=\\\"$$PUTTY_SRC_VERSION\\\"
 

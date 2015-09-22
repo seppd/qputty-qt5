@@ -1,0 +1,3 @@
+[submodule "putty"]
+	path = putty
+	url = git://git.tartarus.org/simon/putty.git

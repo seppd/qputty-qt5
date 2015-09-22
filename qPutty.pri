@@ -4,7 +4,7 @@ isEmpty(QPUTTY_HOME){
     QPUTTY_HOME=.
 }
 isEmpty(PUTTY_HOME){
-    PUTTY_HOME=../putty
+    PUTTY_HOME=./putty
 }
 isEmpty(KERBEROS){
     KERBEROS=yes
