@@ -11,14 +11,11 @@ What was not:
 - Windows platform code porting (I've made some modifications, but still insufficient to compile the project, moreover I'm not interested in Windows support)
 - MacOS platform code porting (I don't have one to test)
 
-README file in the sources directory is from original qputty and is obsolete.
+README file in the sources directory is from original qPutty and is obsolete.  
 Icon is based on Breeze (Plasma 5 icon theme) so it is under LGPL3.
 
 Building example:  
-git clone https://github.com/dsmorozov/qputty-qt5.git  
-git clone git://git.tartarus.org/simon/putty.git  
-cd putty  
-git checkout tags/0.65  
-cd ../qputty-qt5  
+git clone --recursive https://github.com/dsmorozov/qputty-qt5.git  
+cd qputty-qt5  
 qmake  
 make  
