@@ -31,6 +31,9 @@
 #include <QStringList>
 #include "structs.h"
 
+#undef min
+#undef max
+
 struct conf_tag {
     tree234 *tree;
 };
