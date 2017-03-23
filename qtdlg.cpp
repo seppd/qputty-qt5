@@ -67,6 +67,11 @@ void old_keyfile_warning(void);
 
 #define FLAG_UPDATING_COMBO_LIST 1
 
+char *buildinfo_gtk_version(void)
+{
+    return NULL;
+}
+
 static int string_width(char *)
 {
     return 0;
@@ -271,7 +276,7 @@ void dlg_beep(void *)
 }
 
 
-void dlg_error_msg(void *dlg, char *msg)
+void dlg_error_msg(void *dlg, const char *msg)
 {
     ((ConfigWidget*)dlg)->errorMessage(msg);
 }
@@ -340,7 +345,7 @@ int reallyclose(void *)
     return ret;
 }
 
-int verify_ssh_host_key(void *, char *host, int port, char *keytype,
+int verify_ssh_host_key(void *, char *host, int port, const char *keytype,
                         char *keystr, char *fingerprint,
                         void (*)(void *, int ), void *)
 {
@@ -438,6 +443,37 @@ int askalg(void *, const char *algtype, const char *algname,
     }
 }
 
+int askhk(void *frontend, const char *algname, const char *betteralgs,
+          void (*)(void *, int ), void *)
+{
+    static const char msg[] =
+	"The first host key type we have stored for this server\n"
+	"is %s, which is below the configured warning threshold.\n"
+	"The server also provides the following types of host key\n"
+        "above the threshold, which we do not have stored:\n"
+        "%s\n"
+	"Continue with connection?";
+    char *text;
+    int ret;
+
+    text = dupprintf(msg, algname, betteralgs);
+    ret = messagebox(0,
+		     "PuTTY Security Alert", text,
+		     string_width("is ecdsa-nistp521, which is"
+                                  " below the configured warning threshold."),
+                     FALSE,
+		     "Yes", 'y', 0, 1,
+		     "No", 'n', 0, 0,
+		     NULL);
+    sfree(text);
+
+    if (ret) {
+	return 1;
+    } else {
+	return 0;
+    }
+}
+
 void old_keyfile_warning(void)
 {
     /*
@@ -450,7 +486,7 @@ void fatal_message_box(void *, char *msg)
     QMessageBox::warning(qPutty,"PuTTY Fatal Error", msg);
 }
 
-void fatalbox(char *p, ...)
+void fatalbox(const char *p, ...)
 {
     va_list ap;
     char *msg;
@@ -467,7 +503,7 @@ void nonfatal_message_box(void *, char *msg)
     QMessageBox::information(qPutty,"PuTTY Info", msg);
 }
 
-void nonfatal(char *p, ...)
+void nonfatal(const char *p, ...)
 {
     va_list ap;
     char *msg;

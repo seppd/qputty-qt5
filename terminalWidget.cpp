@@ -99,6 +99,7 @@ Widget::insertText(int col,int line,const QString& text,unsigned long /*attr*/)
 void 
 Widget::sendText(const QString& text) const
 {
+    if (text.size() == 0) return;
     ldisc_send(_inst->ldisc,text.toLocal8Bit().data(),text.size(),0);
 }
 
@@ -137,7 +138,7 @@ Widget::contextMenu(QMenu* menu) const
 }
 
 #ifndef Q_OS_WIN
-int 
+uxsel_id *
 Widget::registerFd(int fd,int rwx)
 {
     int pId=(fd+1)<<3; // fd start at 0
@@ -173,15 +174,17 @@ Widget::registerFd(int fd,int rwx)
         QObject::connect(sn,SIGNAL(activated(int)),this,SLOT(fdExceptionInput(int)));
     }
 #endif
-    return pId+rwx; // id
+    uxsel_id *id = new uxsel_id;
+    id->id = pId+rwx; // id
+    return id;
 }
 
 void
-Widget::releaseFd(int id)
+Widget::releaseFd(uxsel_id *id)
 {
-    int pId=id>>3<<3;
+    int pId=id->id>>3<<3;
     QSocketNotifier* sn;
-    if(id&1)
+    if(id->id&1)
     {
         int rId=pId+QSocketNotifier::Read;
         sn=_fdObservers[rId];
@@ -190,7 +193,7 @@ Widget::releaseFd(int id)
         sn->setEnabled(false);
         sn->deleteLater();
     }
-    if(id&2)
+    if(id->id&2)
     {
         int wId=pId+QSocketNotifier::Write;
         sn=_fdObservers[wId];
@@ -200,7 +203,7 @@ Widget::releaseFd(int id)
         sn->deleteLater();
     }
 #ifndef Q_OS_MAC
-    if(id&4)
+    if(id->id&4)
     {
         int eId=pId+QSocketNotifier::Exception;
         sn=_fdObservers[eId];
@@ -210,6 +213,7 @@ Widget::releaseFd(int id)
         sn->deleteLater();
     }
 #endif
+    delete id;
 }
 #endif
 
@@ -330,7 +334,7 @@ void
 Widget::reset()
 {
     term_pwron(_inst->term,TRUE);
-    if (_inst->ldisc) ldisc_send(_inst->ldisc,NULL,0,0);
+    if (_inst->ldisc) ldisc_echoedit_update(_inst->ldisc);
 }
 
 void 

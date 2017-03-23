@@ -124,7 +124,7 @@ WID get_windowid(void *)
     return qPutty->winId();
 }
 
-void connection_fatal(void *frontend, char *p, ...)
+void connection_fatal(void *frontend, const char *p, ...)
 {
     struct gui_data *inst = (struct gui_data *)frontend;
     va_list ap;
@@ -176,8 +176,7 @@ int platform_default_i(const char *name, int def)
 }
 #endif
 
-//void ldisc_update(void *frontend, int echo, int edit)
-void ldisc_update(void *, int , int )
+void frontend_echoedit_update(void *frontend, int echo, int edit)
 {
     /*
      * This is a stub in pterm. If I ever produce a Unix
@@ -205,7 +204,7 @@ int from_backend_untrusted(void *frontend, const char *data, int len)
     return term_data_untrusted(inst->term, data, len);
 }
 
-int get_userpass_input(prompts_t *p, unsigned char *in, int inlen)
+int get_userpass_input(prompts_t *p, const unsigned char *in, int inlen)
 {
     struct gui_data *inst = (struct gui_data *)p->frontend;
     int ret;
@@ -395,11 +394,11 @@ void timer_change_notify(unsigned long next)
 }
 
 #ifndef Q_OS_WIN
-int uxsel_input_add(int fd, int rwx) {
+uxsel_id *uxsel_input_add(int fd, int rwx) {
     return qPutty->registerFd(fd,rwx);
 }
 
-void uxsel_input_remove(int id) {
+void uxsel_input_remove(uxsel_id *id) {
     qPutty->releaseFd(id);
 }
 #endif
@@ -408,6 +407,12 @@ void set_busy_status(void *frontend, int status)
 {
     struct gui_data *inst = (struct gui_data *)frontend;
     inst->busy_status = status;
+}
+
+int frontend_is_utf8(void *frontend)
+{
+    struct gui_data *inst = (struct gui_data *)frontend;
+    return inst->ucsdata.line_codepage == CS_UTF8;
 }
 
 /*
@@ -613,7 +618,7 @@ void do_scroll(Context , int , int , int lines)
     qPutty->scroll(lines);
 }
 
-void modalfatalbox(char *p, ...)
+void modalfatalbox(const char *p, ...)
 {
     va_list ap;
     fprintf(stderr, "FATAL ERROR: ");
@@ -624,7 +629,7 @@ void modalfatalbox(char *p, ...)
     exit(1);
 }
 
-void cmdline_error(char *p, ...)
+void cmdline_error(const char *p, ...)
 {
     va_list ap;
     fprintf(stderr, "%s: ", appname);
@@ -643,7 +648,7 @@ char *gdk_get_display()
     return 0;
 #endif
 }
-char *get_x_display(void *)
+const char *get_x_display(void *)
 {
     return gdk_get_display();
 }

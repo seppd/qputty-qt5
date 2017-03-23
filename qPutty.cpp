@@ -106,7 +106,7 @@ QPutty::run(const QStringList& args)
     setupOverwriteDefaults();
     setupWidget();
     start_backend(&_inst);
-    ldisc_send(_inst.ldisc, NULL, 0, 0);
+    ldisc_echoedit_update(_inst.ldisc);
 #ifndef Q_OS_WIN
     block_signal(SIGCHLD, 0);
     block_signal(SIGPIPE, 1);
@@ -196,7 +196,7 @@ QPutty::reconfigure()
         setupScrollBar();
         setupWidget();
         log_reconfig(_inst.logctx,&conf2);
-        if(_inst.ldisc) ldisc_send(_inst.ldisc,NULL,0,0);
+        if(_inst.ldisc) ldisc_echoedit_update(_inst.ldisc);
         term_reconfig(_inst.term,&conf2);
         if(_inst.back) _inst.back->reconfig(_inst.backhandle,&conf2);
         _inst.reconfiguring=FALSE;
@@ -274,14 +274,14 @@ QPutty::winEvent(MSG*msg,long* result)
 }
 
 #else
-int 
+uxsel_id *
 QPutty::registerFd(int fd,int rwx)
 {
     return _terminalWidget->registerFd(fd,rwx);
 }
 
 void
-QPutty::releaseFd(int id)
+QPutty::releaseFd(uxsel_id *id)
 {
     _terminalWidget->releaseFd(id);
 }
@@ -577,7 +577,9 @@ QPutty::setupOverwriteDefaults()
         int t=key_type(ppkif);
         switch(t)
         {
-            case SSH_KEYTYPE_OPENSSH:
+            case SSH_KEYTYPE_OPENSSH_AUTO:
+            case SSH_KEYTYPE_OPENSSH_PEM:
+            case SSH_KEYTYPE_OPENSSH_NEW:
             case SSH_KEYTYPE_SSHCOM:
                 const char* error=NULL;
                 struct ssh2_userkey* ssh2key=import_ssh2(ppkif,t,"1",&error);

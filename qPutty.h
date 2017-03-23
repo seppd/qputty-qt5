@@ -60,8 +60,8 @@ class QPutty: public QWidget
 #ifdef Q_OS_WIN
     bool winEvent(MSG* msg,long* result);
 #else
-    int registerFd(int fd,int rwx);
-    void releaseFd(int id);
+    uxsel_id *registerFd(int fd,int rwx);
+    void releaseFd(uxsel_id *id);
 #endif
     void timerChangeNotify(long ticks,long nextNow);
     virtual void eventLogUpdate(int eventNo);

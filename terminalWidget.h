@@ -56,8 +56,8 @@ class Widget:public AbstractTerminalWidget
     virtual void requestPaste();
     virtual void contextMenu(QMenu* menu) const;
 #ifndef Q_OS_WIN
-    virtual int registerFd(int fd,int rwx);
-    virtual void releaseFd(int id);
+    virtual uxsel_id *registerFd(int fd,int rwx);
+    virtual void releaseFd(uxsel_id *id);
 #endif
     virtual void timerChangeNotify(long ticks,long nextNow);
     virtual int colDiff(int width) const;

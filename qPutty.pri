@@ -24,10 +24,10 @@ isEmpty(PUTTY_RELEASE){
     PUTTY_RELEASE=no
 }
 
-
 RESOURCES *= $$QPUTTY_HOME/qPutty.qrc
 INCLUDEPATH *= $$QPUTTY_HOME $$PUTTY_HOME/./ $$PUTTY_HOME/charset/
 SOURCES *= $$PUTTY_HOME/be_all_s.c \
+        $$PUTTY_HOME/be_misc.c \
         $$PUTTY_HOME/callback.c \
         $$PUTTY_HOME/cmdline.c \
         $$PUTTY_HOME/conf.c \
@@ -49,13 +49,16 @@ SOURCES *= $$PUTTY_HOME/be_all_s.c \
         $$PUTTY_HOME/ssh.c \
         $$PUTTY_HOME/sshaes.c \
         $$PUTTY_HOME/ssharcf.c \
+        $$PUTTY_HOME/sshbcrypt.c \
         $$PUTTY_HOME/sshblowf.c \
         $$PUTTY_HOME/sshbn.c \
+        $$PUTTY_HOME/sshccp.c \
         $$PUTTY_HOME/sshcrc.c \
         $$PUTTY_HOME/sshcrcda.c \
         $$PUTTY_HOME/sshdes.c \
         $$PUTTY_HOME/sshdh.c \
         $$PUTTY_HOME/sshdss.c \
+        $$PUTTY_HOME/sshecc.c \
         $$PUTTY_HOME/sshmd5.c \
         $$PUTTY_HOME/sshpubk.c \
         $$PUTTY_HOME/sshrand.c \

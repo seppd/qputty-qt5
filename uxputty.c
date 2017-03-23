@@ -87,7 +87,7 @@ static int got_host = 0;
 
 const int use_event_log = 1, new_session = 1, saved_sessions = 1;
 
-int process_nonoption_arg(char *arg, Conf *conf, int *allow_launch)
+int process_nonoption_arg(const char *arg, Conf *conf, int *allow_launch)
 {
     char *p, *q = arg;
 

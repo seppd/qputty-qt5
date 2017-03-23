@@ -26,6 +26,10 @@
 
 #include <QWidget>
 
+struct uxsel_id {
+    int id;
+};
+
 class QMenu;
 class AbstractTerminalWidget:public QWidget
 {
@@ -41,8 +45,8 @@ class AbstractTerminalWidget:public QWidget
     virtual void requestPaste()=0;
     virtual void contextMenu(QMenu* menu) const=0;
 #ifndef Q_OS_WIN
-    virtual int registerFd(int fd,int rwx)=0;
-    virtual void releaseFd(int id)=0;
+    virtual uxsel_id *registerFd(int fd,int rwx)=0;
+    virtual void releaseFd(uxsel_id *id)=0;
 #endif
     virtual void timerChangeNotify(long ticks,long nextNow)=0;
     virtual void scrollTermTo(int lineNo)=0;
