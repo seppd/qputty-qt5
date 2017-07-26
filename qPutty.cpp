@@ -44,6 +44,8 @@ extern "C" {
 #include <ssh.h>
 }
 
+const int buildinfo_gtk_relevant = FALSE;
+
 extern "C++" {
     int do_cmdline(int argc, char **argv, int do_everything, int *allow_launch,struct gui_data *inst, Conf *conf);
     void setup_fonts_ucs(struct gui_data *inst);
